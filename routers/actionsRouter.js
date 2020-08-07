@@ -5,7 +5,7 @@ const validateProjectId = require("../middleware/validateProjectId");
 
 const router = express.Router();
 
-// GET all actions
+// GET all actions for every project
 router.get("/", validateProjectId, (req, res) => {
   actionsDB
     .get()
@@ -13,7 +13,7 @@ router.get("/", validateProjectId, (req, res) => {
       res.status(200).json(actions);
     })
     .catch((error) => {
-      error: "There was an error getting all of your actions. Please try again. :)";
+      error: "There was an error getting the actions for all of your projects. Please try again. :)";
     });
 });
 
