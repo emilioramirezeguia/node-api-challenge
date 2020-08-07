@@ -6,7 +6,17 @@ const router = express.Router();
 
 // GET every project
 router.get("/", (req, res) => {
-  res.status(200).json("projectsRouter is working!");
+  projectsDB
+    .get()
+    .then((projects) => {
+      res.status(200).json(projects);
+    })
+    .catch((error) => {
+      res.status(500).json({
+        error:
+          "There was an error getting all of your projects. Please try again :)",
+      });
+    });
 });
 
 // CREATE a new project
