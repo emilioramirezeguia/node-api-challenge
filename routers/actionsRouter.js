@@ -6,8 +6,15 @@ const validateProjectId = require("../middleware/validateProjectId");
 const router = express.Router();
 
 // GET all actions
-router.get("/:id", validateProjectId, (req, res) => {
-  console.log("hello");
+router.get("/", validateProjectId, (req, res) => {
+  actionsDB
+    .get()
+    .then((actions) => {
+      res.status(200).json(actions);
+    })
+    .catch((error) => {
+      error: "There was an error getting all of your actions. Please try again. :)";
+    });
 });
 
 module.exports = router;
