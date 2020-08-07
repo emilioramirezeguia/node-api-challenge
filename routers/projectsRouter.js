@@ -20,7 +20,7 @@ router.get("/", (req, res) => {
     });
 });
 
-// CREATE a new project
+// Create (POST) a new project
 router.post("/", validateProject, (req, res) => {
   const project = req.body;
 
@@ -38,21 +38,33 @@ router.post("/", validateProject, (req, res) => {
 });
 
 // GET project by id
-router.get("/:id", (req, res) => {
+router.get("/:id", validateProjectId, (req, res) => {
   const project = req.project;
 
   projectsDB
-    .get(req.params.id)
-    .then((project) => {
-      res.status(200).json(project);
+    .get(project.id)
+    .then((foundProject) => {
+      res.status(200).json(foundProject);
     })
     .catch((error) => {
-      res
-        .status(500)
-        .json({
-          error:
-            "There was an error getting your project. Please try again. :)",
-        });
+      res.status(500).json({
+        error: "There was an error getting your project. Please try again. :)",
+      });
+    });
+});
+
+// Update (PUT) project by id
+router.put("/:id", validateProject, validateProjectId, (req, res) => {
+  const project = req.project;
+  const projectUpdates = req.body;
+
+  projectsDB
+    .update(project.id, projectUpdates)
+    .then((updatedProject) => {
+      res.status(200).json(updatedProject);
+    })
+    .catch((error) => {
+      error: "There was an error updating your project. Please try again. :)";
     });
 });
 
