@@ -53,7 +53,7 @@ router.get("/:id", validateProjectId, (req, res) => {
     });
 });
 
-// Update (PUT) project by id
+// Update (PUT) a project by id
 router.put("/:id", validateProject, validateProjectId, (req, res) => {
   const project = req.project;
   const projectUpdates = req.body;
@@ -65,6 +65,22 @@ router.put("/:id", validateProject, validateProjectId, (req, res) => {
     })
     .catch((error) => {
       error: "There was an error updating your project. Please try again. :)";
+    });
+});
+
+// DELETE a project by id
+router.delete("/:id", validateProjectId, (req, res) => {
+  const project = req.project;
+
+  projectsDB
+    .remove(project.id)
+    .then((confirmDeletion) => {
+      res.status(204).end();
+    })
+    .catch((error) => {
+      res.status(500).json({
+        error: "There was an error deleting your project. Please try again. :)",
+      });
     });
 });
 
