@@ -14,7 +14,7 @@ router.get("/", (req, res) => {
     .catch((error) => {
       res.status(500).json({
         error:
-          "There was an error getting all of your projects. Please try again :)",
+          "There was an error getting all of your projects. Please try again. :)",
       });
     });
 });
@@ -31,9 +31,11 @@ router.post("/", validateProject, (req, res) => {
     .catch((error) => {
       res.status(500).json({
         error:
-          "There was an error on our side creating your project. Please try again :)",
+          "There was an error on our side creating your project. Please try again. :)",
       });
     });
 });
+
+// GET project by id
 
 module.exports = router;
