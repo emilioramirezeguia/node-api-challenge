@@ -1,6 +1,7 @@
 const express = require("express");
 const projectsDB = require("../data/helpers/projectModel");
 const validateProject = require("../middleware/validateProject");
+const validateProjectId = require("../middleware/validateProjectId");
 
 const router = express.Router();
 
@@ -37,5 +38,22 @@ router.post("/", validateProject, (req, res) => {
 });
 
 // GET project by id
+router.get("/:id", (req, res) => {
+  const project = req.project;
+
+  projectsDB
+    .get(req.params.id)
+    .then((project) => {
+      res.status(200).json(project);
+    })
+    .catch((error) => {
+      res
+        .status(500)
+        .json({
+          error:
+            "There was an error getting your project. Please try again. :)",
+        });
+    });
+});
 
 module.exports = router;
