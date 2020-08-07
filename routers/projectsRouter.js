@@ -20,6 +20,25 @@ router.get("/", (req, res) => {
     });
 });
 
+// GET every action for a project by its id
+router.get("/:id/actions", validateProjectId, (req, res) => {
+  const project = req.project;
+
+  projectsDB
+    .getProjectActions(project.id)
+    .then((projectActions) => {
+      res.status(200).json(projectActions);
+    })
+    .catch((error) => {
+      res
+        .status(500)
+        .json({
+          error:
+            "There was an error getting the actions for this project. Please try again. :)",
+        });
+    });
+});
+
 // Create (POST) a new project
 router.post("/", validateProject, (req, res) => {
   const project = req.body;
