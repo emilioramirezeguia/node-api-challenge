@@ -30,12 +30,10 @@ router.get("/:id/actions", validateProjectId, (req, res) => {
       res.status(200).json(projectActions);
     })
     .catch((error) => {
-      res
-        .status(500)
-        .json({
-          error:
-            "There was an error getting the actions for this project. Please try again. :)",
-        });
+      res.status(500).json({
+        error:
+          "There was an error getting the actions for this project. Please try again. :)",
+      });
     });
 });
 
@@ -83,7 +81,12 @@ router.put("/:id", validateProject, validateProjectId, (req, res) => {
       res.status(200).json(updatedProject);
     })
     .catch((error) => {
-      error: "There was an error updating your project. Please try again. :)";
+      res
+        .status(500)
+        .json({
+          error:
+            "There was an error updating your project. Please try again. :)",
+        });
     });
 });
 
